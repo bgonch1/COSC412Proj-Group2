@@ -1,0 +1,165 @@
+<h2 class = "page-header">Claims</h2>
+{{#if errors}}
+	{{#each errors}}
+	  <div class ="alert alert-danger">{{msg}}</div>
+	{{/each}}
+{{/if}}
+<form method = "post" action = "/users/claims">
+  <div class = "form-group">
+    <label>First Name</label>
+    <input type = "text" class ="form-control" placeholder ="First Name"
+    name = "first_name">
+  </div>
+  <div class = "form-group">
+    <label>Middle Initial</label>
+    <input type = "text" class ="form-control" placeholder ="Middle intial(N/A if not applicable)"
+    name = "middle_initial">
+  </div>
+  <div class = "form-group">
+    <label>Last Name</label>
+    <input type = "text" class ="form-control" placeholder ="last Name"
+    name = "last_name">
+  </div>
+  <div class = "form-group">
+    <label>SSN</label>
+    <input type = "text" class ="form-control" placeholder ="XXX-XX-XXXX"
+    name = "SSN">
+  </div>
+  <label>Gender</label>
+  <label class="container">Female
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">Male
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <div class = "form-group">
+    <label>Enter the language you prefer to speak: </label>
+    <input type = "text" class ="form-control" placeholder ="Speak language(N/A if not applicable)"
+    name = "speak_language">
+  </div> 
+    <div class = "form-group">
+    <label>Enter the language you prefer to write: </label>
+    <input type = "text" class ="form-control" placeholder ="Write language(N/A if not applicable)"
+    name = "write_language">
+  </div>   
+  <div class = "form-group">
+    <label>Enter your date of birth</label>
+    <input type = "text" class ="form-control" placeholder ="XX/XX/XXXX"
+    name = "DOB">
+  </div>
+    <div class = "form-group">
+    <label>Enter the name of the city you were born</label>
+    <input type = "text" class ="form-control" placeholder ="City"
+    name = "City">
+  </div>
+  <label>Was a public record of your birth made before you were age 5?</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+    <label class="container">Unkown
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <div class = "form-group">
+    <label>Enter the name of the state or Foriegn country you were born</label>
+    <input type = "text" class ="form-control" placeholder ="State"
+    name = "State">
+  </div>
+  <label>Was a religous record of your birth made before you were age 5?</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+    <label class="container">Unkown
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label>Are you a US citizen?</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label>Are you an alien lawfully present in the US?</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <div class = "form-group">
+    <label>When were you lawfully admitted to the US?</label>
+    <input type = "text" class ="form-control" placeholder ="XX/XX/XXXX(N/A if not applicable)"
+    name = "admission_to_US">
+  </div>
+  <div class = "form-group">
+    <label>Enter your name at birth if different from item(1)</label>
+    <input type = "text" class ="form-control" placeholder ="Name at Birth(N/A if not applicable)"
+    name = "Name_at_Birth">
+  </div>
+  <label>Have you used any other names?</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <div class = "form-group">
+    <label>Other name used</label>
+    <input type = "text" class ="form-control" placeholder ="Other Name(N/A if not applicable)"
+    name = "Other_Name">
+  </div>
+  <label>Have you used any other Social Security numbers?</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>    
+  <div class = "form-group">
+    <label>Enter Social Security numbers used</label>
+    <input type = "text" class ="form-control" placeholder ="XXX-XX-XXXX(N/A if not applicable)"
+    name = "Other_SSN">
+  </div> 
+  <div class = "form-group">
+    <label>When do you believe your condition became severe enough to keep you from working 
+    (even if you have never worked)?</label>
+    <input type = "text" class ="form-control" placeholder ="XXX-XX-XXXX"
+    name = "severity_date">
+  </div>  
+  <label>Have you(or has someone on your behalf) ever filled an application for social security benefits, a period of dissability under Social Security, Supplemental Security Income, or hospital or medical insurance under Medicare</label>
+  <label class="container">Yes
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">No
+    <input type="checkbox">
+    <span class="checkmark"></span>
+  </label>  
+  <div class ="form-group">
+    <label>Enter the name of the person on whose Social Security record you filled the other application</label>
+    <input type ="text	" class="form-control"
+    placeholder ="Enter N/A if not applicable" name = "person_SSN">
+  </div>
+  <button type ="submit" class="btn btn-default">Submit</button>
+</form>
