@@ -23,39 +23,45 @@ router.post('/register',function(req,res){
      var username =req.body.username;
      var password =req.body.password;
      var password2 =req.body.password2;
+     //var validPass = /^[A-Za-z]\w{7,15}$/;
+
 
      //Validation
      req.checkBody('name','Name is required').notEmpty();
      req.checkBody('email','Email is required').notEmpty();
      req.checkBody('email','Email is not valid').isEmail();
      req.checkBody('username','username is required').notEmpty();
-     req.checkBody('password','Password is required').notEmpty();
+     req.checkBody('password','Password is required that is atleast 8 characters, 1 number, 1 uppercase letter and 1 lowercase letter').notEmpty().isLength({ min: 4}).matches('[0-9]').matches('[a-z]').matches('[A-Z]');
      req.checkBody('password2','Passwords do not match').equals(req.body.password);
+    
 
+
+
+    
 
 
      var errors = req.validationErrors();
      if(errors){
-     	res.render('register',{
-     		errors:errors 
-     	});
-     	
+      res.render('register',{
+        errors:errors 
+      });
+      
      }else {
-     	var newUser = new User({
-     		name: name,
-     		email: email,
-     		username: username,
-     		password: password
-     	});
+      var newUser = new User({
+        name: name,
+        email: email,
+        username: username,
+        password: password
+      });
 
-     	User.createUser(newUser, function(err,user){
-     		if(err)throw err;
-     		console.log(user);
-     	});
+      User.createUser(newUser, function(err,user){
+        if(err)throw err;
+        console.log(user);
+      });
 
-     	req.flash('success_msg', 'You are registered and can now login');
+      req.flash('success_msg', 'You are registered and can now login');
 
-     	res.redirect('/users/login');
+      res.redirect('/users/login');
 
      }
 });
@@ -76,105 +82,77 @@ router.post('/claims',function(req,res){
      var Other_SSN = req.body.Other_SSN;
      var severity_date = req.body.severity_date;
      var person_SSN = req.body.person_SSN;
+     var Gender = req.body.Gender;
+     var gender_value;
+     if(Gender =='Male'){
+        gender_value = req.body.g1;
 
-     //Validation
-     req.checkBody('first_name','First Name is required').notEmpty();
-     req.checkBody('middle_initial','Middle Initial is required').notEmpty();
-     req.checkBody('last_name','Last Name is required').notEmpty();
-     req.checkBody('SSN','Social Secuirty Number is required').notEmpty();
-     req.checkBody('speak_language','The language you speak is required').notEmpty();
-     req.checkBody('DOB','Date of Birth is required').notEmpty();
-     req.checkBody('write_language','The language you write in is required').notEmpty();
-     req.checkBody('City','City you live in is required').notEmpty();
-     req.checkBody('State','State you live in is required').notEmpty();
-     req.checkBody('admission_to_US','When you were lawfully admitted to the US is required').notEmpty();
-     req.checkBody('Name_at_Birth','Name at Birth is required').notEmpty();
-     req.checkBody('Other_Name','Other name is required').notEmpty();
-     req.checkBody('Other_SSN','Other Social Security number is required').notEmpty();
-     req.checkBody('severity_date','The date your condition became severe is required').notEmpty();
-     req.checkBody('person_SSN','The person who filled out your Social Security record is required').notEmpty();
+     }else if(Gender =='Female'){
+        gender_value = req.body.g2;
 
+     } 
+     var publicRecord = req.body.publicRecord;
+     var publicRecord_value;
+     if(publicRecord == 'Yes'){
+      publicRecord_value = req.body.pr1;
+     }else if(publicRecord == 'No'){
+      publicRecord_value = req.body.pr2;
+     }else if(publicRecord == 'Unknown'){
+      publicRecord_value == req.body.pr3;
+     }
+     var religiousRecord = req.body.religiousRecord;
+     var religiousRecord_value;
+     if(religiousRecord == 'Yes'){
+      religiousRecord_value = req.body.pr1;
+     }else if(religiousRecord == 'No'){
+      religiousRecord_value = req.body.pr2;
+     }else if(religiousRecord == 'Unknown'){
+      religiousRecord_value == req.body.pr3;
+     }
+     var usCitizen = req.body.usCitizen;
+     var usCitizen_value;
+     if(usCitizen =='Yes'){
+        usCitizen_value = req.body.g1;
 
+     }else if(usCitizen =='No'){
+        usCitizen_value = req.body.g2;
 
+     } 
+     var Alien = req.body.Alien;
+     var Alien_value;
+     if(Alien =='Yes'){
+        Alien_value = req.body.g1;
 
-     var errors = req.validationErrors();
-     if(errors){
-      res.render('claims',{
-        errors:errors 
-      });
-      
-     }else {
-      var newClaim = new Claim({
-        first_name: first_name,
-        middle_initial: middle_initial,
-        SSN: SSN,
-        speak_language: speak_language,
-        write_language: write_language,
-        DOB : DOB,
-        City:City,
-        State: State,
-        admission_to_US : admission_to_US,
-        Name_at_Birth : Name_at_Birth,
-        Other_Name : Other_Name,
-        Other_SSN : Other_SSN,
-        severity_date : severity_date,
-      });
-
-      Claim.createClaim(newClaim, function(err,claim){
-        if(err)throw err;
-        console.log(claim);
-      });
-
-
-      req.flash('success_msg', 'Your claim has filled');
-
-      res.redirect('/users/login');
+     }else if(Alien =='No'){
+        Alien_value = req.body.g2;
 
      }
-});
+     var otherNames = req.body.otherNames;
+     var otherNames_value;
+     if(otherNames =='Yes'){
+        otherNames_value = req.body.g1;
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-  	User.getUserByUsername(username,function(err,user){
-  		if(err) throw err;
-  		if(!user){
-  			return done(null,false,{message: 'Unknown User'});
-  		}
+     }else if(otherNames =='No'){
+        otherNames_value = req.body.g2;
 
-  		User.comparePassword(password,user.password,function(err, isMatch){
-  			if(err) throw err;
-  			if(isMatch){
-  				return done(null,user);
-  			}else{
-  				return done(null,false,{message:'Invalid password'});
-  			}
-  		});
-  	});
-  
-  }));
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+     }
+     var otherSSN = req.body.otherSSN;
+     var otherSSN_value;
+     if(otherSSN =='Yes'){
+        otherSSN_value = req.body.g1;
 
-passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
-    done(err, user);
-  });
-});
+     }else if(otherSSN =='No'){
+        otherSSN_value = req.body.g2;
 
-router.post('/login',
-  passport.authenticate('local',{successRedirect:'/',failureRedirect: '/users/login', failureFlash: true}),
-  function(req, res) {
-  	res.redirect('/');
- 
-  });
+     }
+     var personSSN = req.body.personSSN;
+     var personSSN_value;
+     if(personSSN =='Yes'){
+        personSSN_value = req.body.g1;
 
-router.get('/logout',function(req,res){
-	req.logout();
+     }else if(personSSN =='No'){
+        personSSN_value = req.body.g2;
 
-	req.flash('success_msg', 'You are logged out');
+     }     
 
-	res.redirect('/users/login');
 
-});
-module.exports = router;
