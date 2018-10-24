@@ -48,6 +48,30 @@ var ClaimSchema = mongoose.Schema({
 	},
 	person_SSN:{
 		type:String
+	},
+	Gender:{
+		type:String
+	},
+	publicRecord:{
+		type:String
+	},
+	religiousRecord:{
+		type:String
+	},
+	usCitizen:{
+		type:String
+	},
+	Alien:{
+		type:String
+	},
+	otherNames :{
+		type:String
+	},
+	otherSSN :{
+		type:String
+	},
+	personSSN:{
+		type:String
 	}
 
 
@@ -72,7 +96,6 @@ module.exports.getUserByUsername = function(username,callback){
 module.exports.getUserById = function(id,callback){
 	User.findById(id, callback);
 }
-
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch){
 		if(err)throw err;
