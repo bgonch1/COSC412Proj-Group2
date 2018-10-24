@@ -1,8 +1,8 @@
 <h2 class = "page-header">Claims</h2>
 {{#if errors}}
-	{{#each errors}}
-	  <div class ="alert alert-danger">{{msg}}</div>
-	{{/each}}
+  {{#each errors}}
+    <div class ="alert alert-danger">{{msg}}</div>
+  {{/each}}
 {{/if}}
 <form method = "post" action = "/users/claims">
   <div class = "form-group">
@@ -25,15 +25,11 @@
     <input type = "text" class ="form-control" placeholder ="XXX-XX-XXXX"
     name = "SSN">
   </div>
-  <label>Gender</label>
-  <label class="container">Female
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">Male
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
+  <div id="Gender">
+    <label>Gender:&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="g1" name="Gender" value="Male"> Male
+    <input type="radio" id="g2" name="Gender" value="Female"> Female
+  </div>
   <div class = "form-group">
     <label>Enter the language you prefer to speak: </label>
     <input type = "text" class ="form-control" placeholder ="Speak language(N/A if not applicable)"
@@ -54,55 +50,33 @@
     <input type = "text" class ="form-control" placeholder ="City"
     name = "City">
   </div>
-  <label>Was a public record of your birth made before you were age 5?</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-    <label class="container">Unkown
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
+  <div id="publicRecord">
+    <label>Was a public record of your birth made before you were age 5?:&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="pr1" name="publicRecord" value="Yes"> Yes
+    <input type="radio" id="pr2" name="publicRecord" value="No"> No
+    <input type="radio" id="pr3" name="publicRecord" value="Unknown"> Unknown
+  </div>
   <div class = "form-group">
     <label>Enter the name of the state or Foriegn country you were born</label>
     <input type = "text" class ="form-control" placeholder ="State"
     name = "State">
   </div>
-  <label>Was a religous record of your birth made before you were age 5?</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-    <label class="container">Unkown
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label>Are you a US citizen?</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label>Are you an alien lawfully present in the US?</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
+  <div id="religiousRecord">
+    <label>Was a religious record of your birth made before you were age 5?&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="rr1" name="religiousRecord" value="Yes"> Yes
+    <input type="radio" id="rr2" name="religiousRecord" value="No"> No
+    <input type="radio" id="rr3" name="religiousRecord" value="Unknown"> Unknown
+  </div>  
+  <div id="usCitizen">
+    <label>Are you a US citizen?&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="usc1" name="usCitizen" value="Yes"> Yes 
+    <input type="radio" id="usc2" name="usCitizen" value="No"> No
+  </div>
+  <div id="Alien">
+    <label>Are you an alien lawfully present in the US?&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="a1" name="Alien" value="Yes"> Yes 
+    <input type="radio" id="a2" name="Alien" value="No"> No
+  </div>  
   <div class = "form-group">
     <label>When were you lawfully admitted to the US?</label>
     <input type = "text" class ="form-control" placeholder ="XX/XX/XXXX(N/A if not applicable)"
@@ -113,29 +87,21 @@
     <input type = "text" class ="form-control" placeholder ="Name at Birth(N/A if not applicable)"
     name = "Name_at_Birth">
   </div>
-  <label>Have you used any other names?</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
+  <div id="otherNames">
+    <label>Have you used any other names?&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="on1" name="otherNames" value="Yes"> Yes 
+    <input type="radio" id="on2" name="otherNames" value="No"> No
+  </div> 
   <div class = "form-group">
     <label>Other name used</label>
     <input type = "text" class ="form-control" placeholder ="Other Name(N/A if not applicable)"
     name = "Other_Name">
   </div>
-  <label>Have you used any other Social Security numbers?</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>    
+  <div id="otherSSN">
+    <label>Have you used any other Social Security numbers?&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="ossn1" name="otherSSN" value="Yes"> Yes 
+    <input type="radio" id="ossn2" name="otherSSN" value="No"> No
+  </div>     
   <div class = "form-group">
     <label>Enter Social Security numbers used</label>
     <input type = "text" class ="form-control" placeholder ="XXX-XX-XXXX(N/A if not applicable)"
@@ -147,18 +113,14 @@
     <input type = "text" class ="form-control" placeholder ="XXX-XX-XXXX"
     name = "severity_date">
   </div>  
-  <label>Have you(or has someone on your behalf) ever filled an application for social security benefits, a period of dissability under Social Security, Supplemental Security Income, or hospital or medical insurance under Medicare</label>
-  <label class="container">Yes
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>
-  <label class="container">No
-    <input type="checkbox">
-    <span class="checkmark"></span>
-  </label>  
+    <div id="personSSN">
+    <label>Have you(or has someone on your behalf) ever filled an application for social security benefits, a period of dissability under Social Security, Supplemental Security Income, or hospital or medical insurance under Medicare?&nbsp&nbsp&nbsp</label>
+    <input type="radio" id="pssn1" name="personSSN" value="Yes"> Yes 
+    <input type="radio" id="pssn2" name="personSSN" value="No"> No
+  </div> 
   <div class ="form-group">
     <label>Enter the name of the person on whose Social Security record you filled the other application</label>
-    <input type ="text	" class="form-control"
+    <input type ="text  " class="form-control"
     placeholder ="Enter N/A if not applicable" name = "person_SSN">
   </div>
   <button type ="submit" class="btn btn-default">Submit</button>
