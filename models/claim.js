@@ -72,7 +72,11 @@ var ClaimSchema = mongoose.Schema({
 	},
 	personSSN:{
 		type:String
+	},
+	updated:{
+		type: Date, default: Date.now
 	}
+
 
 
 });
