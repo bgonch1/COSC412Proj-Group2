@@ -12,6 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
+var MongoClient = require('mongodb').MongoClient;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -63,10 +64,34 @@ app.use(function(req,res,next){
 app.use('/',routes);
 app.use('/users',users);
 
+var url = 'mongodb://localhost/loginapp';
+var str = "";
+
+
+/*app.route('localhost/users/Review').get(function(req, res) {
+   MongoClient.connect(url, function(err, db) {
+       var collection = db.collection('claims');
+       var cursor = collection.find({});
+       str = "";
+       cursor.forEach(function(item) {
+           if (item != null) {
+                   str = str + "    Name  " + item.first_name + "</br>";
+           }
+       }, function(err) {
+           res.send(str);
+           db.close();
+          }
+       );
+   });
+});*/
+
+
 app.set('port',(process.env.PORT || 80));
 app.listen(app.get('port'),function(){
     console.log('Server started on port '+app.get('port'));
 });
+
+
 
 
 
