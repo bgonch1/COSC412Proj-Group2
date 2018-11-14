@@ -25,18 +25,15 @@ var url = 'mongodb://localhost/loginapp';
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 var MongoClient = require('mongodb').MongoClient;
-router.get('/users/Review', function(req, res) {
-	 var username =req.body.username;
-     var password =req.body.password;
-     //var first_name = 'kristen';
-	User.getUserByUsername(username,function(err,user){
+router.post('/users/Activity', function(req, res) {
+	 var username1 =req.body.username;
    MongoClient.connect(url, function(err, db) {
        var collection = db.collection('users');
-       var cursor = collection.find({});
+       var cursor = collection.find({username: username1});
        str = "";
        cursor.forEach(function(item) {
            if (item != null) {
-                   str = str + "    Employee id  " + item.username + "</br>";
+                   str = str + "    usernames  " + item.username + "</br>";
            }
        }, function(err) {
            res.send(str);
@@ -45,5 +42,4 @@ router.get('/users/Review', function(req, res) {
        );
    });
  });
-});
 module.exports = router;
