@@ -26,20 +26,12 @@ mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 var MongoClient = require('mongodb').MongoClient;
 router.post('/users/Activity', function(req, res) {
-	 var username1 =req.body.username;
+	 var name1 =req.body.name;
    MongoClient.connect(url, function(err, db) {
-       var collection = db.collection('users');
-       var cursor = collection.find({username: username1});
-       str = "";
-       cursor.forEach(function(item) {
-           if (item != null) {
-                   str = str + "    usernames  " + item.username + "</br>";
-           }
-       }, function(err) {
-           res.send(str);
-           db.close();
-          }
-       );
+       var collection = db.collection('claims');
+       collection.find({first_name:name1}).toArray(function(err,db){
+       	res.send(db).pretty();
+       });
    });
- });
+});
 module.exports = router;
