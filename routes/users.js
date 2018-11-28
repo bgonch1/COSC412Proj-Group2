@@ -19,6 +19,12 @@ router.get('/Activity', function(req,res){
 router.get('/Review', function(req,res){
      res.render('Review');
 });
+router.get('/Admin', function(req,res){
+  res.render('Admin');
+});
+router.get('/reviewClaims', function(req,res){
+  res.render('reviewClaims');
+});
 
  router.post('/register',function(req,res){
      var name = req.body.name;
@@ -245,5 +251,15 @@ passport.serializeUser(function(user, done) {
  router.post('/Review', function(req,res){
 
  });
+
+  router.post('/Admin',
+  passport.authenticate('local',{successRedirect:'/users/reviewClaims',failureRedirect: '/users/Admin', failureFlash: true}),
+  function(req, res) {
+    res.redirect('/users/reviewClaims');
+ 
+  });
+  router.post('/reviewClaims',function(req,res){
+
+  });
 
 module.exports = router;
