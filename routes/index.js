@@ -34,4 +34,12 @@ router.post('/users/Activity', function(req, res) {
        });
    });
 });
+router.post('/users/reviewClaims', function(req,res){
+	MongoClient.connect(url,function(err,db){
+		var collection = db.collection('claims');
+		collection.find().toArray(function(err,db){
+			res.send(db);
+		});
+	});
+});
 module.exports = router;
