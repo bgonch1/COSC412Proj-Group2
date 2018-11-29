@@ -22,9 +22,13 @@ router.get('/Review', function(req,res){
 router.get('/Admin', function(req,res){
   res.render('Admin');
 });
-router.get('/reviewClaims', function(req,res){
-  res.render('reviewClaims');
+router.get('/ReviewClaims', function(req,res){
+  res.render('ReviewClaims');
 });
+router.get('/AdminRegister', function(req,res){
+    res.render('AdminRegister');
+});
+
 
  router.post('/register',function(req,res){
      var name = req.body.name;
@@ -61,6 +65,42 @@ router.get('/reviewClaims', function(req,res){
         res.redirect('/users/login');
       }
 });
+
+ router.post('/AdminRegister',function(req,res){
+     var adminname = req.body.adminname;
+     var adminemail =req.body.adminemail;
+     var adminusername =req.body.adminusername;
+     var adminpassword =req.body.adminpassword;
+     var adminpassword2 =req.body.adminpassword2;
+      //Validation
+     req.checkBody('adminname','Name is required').notEmpty();
+     req.checkBody('adminemail','Email is required').notEmpty();
+     req.checkBody('adminemail','Email is not valid').isEmail();
+     req.checkBody('adminusername','username is required').notEmpty();
+     req.checkBody('adminpassword','Password is required').notEmpty();
+     req.checkBody('adminpassword','Password is required that is atleast 8 characters, 1 number, 1 uppercase letter and 1 lowercase letter').notEmpty().isLength({ min: 4}).matches('[0-9]').matches('[a-z]').matches('[A-Z]');
+     req.checkBody('adminpassword2','Passwords do not match').equals(req.body.adminpassword);
+      var errors = req.validationErrors();
+     if(errors){
+        res.render('AdminRegister',{
+            errors:errors 
+        });
+        
+     }else {
+        var newAdmin = new Admin({
+            adminname: adminname,
+            adminemail: adminemail,
+            adminusername: adminusername,
+            adminpassword: adminpassword
+        });
+        Admin.createAdmin(newAdmin, function(err,user){
+            if(err)throw err;
+            console.log(Admin);
+        });
+        req.flash('success_msg', 'You are registered and can now login');
+        res.redirect('/users/Admin');
+      }
+});
  router.post('/claims',function(req,res){
      var first_name = req.body.first_name;
      var middle_initial = req.body.middle_initial;
@@ -79,6 +119,8 @@ router.get('/reviewClaims', function(req,res){
      var person_SSN = req.body.person_SSN;
      var Gender = req.body.Gender;
      var gender_value;
+     var claim_status = 'Submitted';
+
      if(Gender =='Male'){
         gender_value = req.body.g1;
 
@@ -194,7 +236,8 @@ router.get('/reviewClaims', function(req,res){
         Alien : Alien,
         otherNames : otherNames,
         otherSSN : otherSSN,
-        personSSN : personSSN
+        personSSN : personSSN,
+        claim_status : claim_status
       });
        Claim.createClaim(newClaim, function(err,claim){
         if(err)throw err;
@@ -253,12 +296,12 @@ passport.serializeUser(function(user, done) {
  });
 
   router.post('/Admin',
-  passport.authenticate('local',{successRedirect:'/users/reviewClaims',failureRedirect: '/users/Admin', failureFlash: true}),
+  passport.authenticate('local',{successRedirect:'/users/ReviewClaims',failureRedirect: '/users/Admin', failureFlash: true}),
   function(req, res) {
-    res.redirect('/users/reviewClaims');
+    res.redirect('/users/ReviewClaims');
  
   });
-  router.post('/reviewClaims',function(req,res){
+  router.post('/ReviewClaims',function(req,res){
 
   });
 
