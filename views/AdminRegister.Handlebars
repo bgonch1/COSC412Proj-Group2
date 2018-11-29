@@ -1,0 +1,34 @@
+<h2 class = "page-header">Admin Account Registration</h2>
+{{#if errors}}
+  {{#each errors}}
+    <div class ="alert alert-danger">{{msg}}</div>
+  {{/each}}
+{{/if}}
+<form method = "post" action = "/users/AdminRegister">
+  <div class = "form-group">
+    <label>Name</label>
+    <input type = "text" class ="form-control" placeholder ="Name"
+    name = "adminname">
+  </div>
+  <div class = "form-group">
+    <label>Username</label>
+    <input type = "text" class ="form-control" placeholder ="Username"
+    name = "adminusername">
+  </div>
+  <div class = "form-group">
+    <label>Email</label>
+    <input type = "email" class ="form-control" placeholder ="Email"
+    name = "adminemail">
+  </div>
+  <div class = "form-group">
+    <label>Password(Requirements: atleast 8 characters, 1 number, 1 uppercase letter and 1 lowercase letter)</label>
+    <input type = "password" class ="form-control" placeholder ="Password"
+    name = "adminpassword">
+  </div>    
+  <div class ="form-group">
+    <label>Confirm Password</label>
+    <input type ="password" class="form-control"
+    placeholder ="Password" name = "adminpassword2">
+  </div>
+  <button type ="submit" class="btn btn-default">Submit</button>
+</form>
