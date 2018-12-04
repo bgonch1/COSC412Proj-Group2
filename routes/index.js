@@ -4,10 +4,16 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 var User = require('../models/user');
 var Claim = require('../models/claim');
+var Admin = require('../models/Admin');
 
 
 router.get('/',ensureAuthenticated, function(req,res){
      res.render('index');
+});
+
+
+router.get('/.',ensureAuthenticated1, function(req,res){
+     res.render('adminindex');
 });
 
 function ensureAuthenticated(req,res,next){
@@ -15,8 +21,19 @@ function ensureAuthenticated(req,res,next){
 		return next();
 
 	}else{
-		//req.flash('error_msg','You are not logged in');
+		req.flash('error_msg','You are not logged in');
 		res.redirect('/users/login');
+	}
+
+}
+
+function ensureAuthenticated1(req,res,next){
+	if(req.isAuthenticated()){
+		return next();
+
+	}else{
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/Admin');
 	}
 
 }
@@ -30,16 +47,20 @@ router.post('/users/Activity', function(req, res) {
    MongoClient.connect(url, function(err, db) {
        var collection = db.collection('claims');
        collection.find({first_name:name1}).toArray(function(err,db){
-       	res.send(db).pretty();
+       			res.send(db);
        });
    });
 });
-router.post('/users/reviewClaims', function(req,res){
+router.post('/users/ReviewClaims', function(req,res){
 	MongoClient.connect(url,function(err,db){
 		var collection = db.collection('claims');
 		collection.find().toArray(function(err,db){
-			res.send(db);
+			var str = db
+			res.send(str);
+
+
 		});
+
 	});
 });
 module.exports = router;
