@@ -20,9 +20,9 @@ var AdminSchema = mongoose.Schema({
 
 });
 
-var Admin = module.exports = mongoose.model('Admin',UserSchema);
+var Admin = module.exports = mongoose.model('Admin',AdminSchema);
 
-module.exports.createAdmin = function(newUser,callback){
+module.exports.createAdmin = function(newAdmin,callback){
 	bcrypt.genSalt(10,function(err,salt){
 		bcrypt.hash(newAdmin.adminpassword,salt,function(err,hash){
 			newAdmin.adminpassword = hash;
@@ -32,7 +32,7 @@ module.exports.createAdmin = function(newUser,callback){
 	});
 }
 
-module.exports.getAdminByUsername = function(username,callback){
+module.exports.getAdminByUsername = function(adminusername,callback){
 	var query = {adminusername: adminusername};
 	Admin.findOne(query, callback);
 }
