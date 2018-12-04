@@ -4,6 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Claim = require('../models/claim');
+var Admin = require('../models/Admin');
  router.get('/register',function(req,res){
      res.render('register');
 });
@@ -93,9 +94,9 @@ router.get('/AdminRegister', function(req,res){
             adminusername: adminusername,
             adminpassword: adminpassword
         });
-        Admin.createAdmin(newAdmin, function(err,user){
+        Admin.createAdmin(newAdmin, function(err,admin){
             if(err)throw err;
-            console.log(Admin);
+            console.log(admin);
         });
         req.flash('success_msg', 'You are registered and can now login');
         res.redirect('/users/Admin');
@@ -273,6 +274,35 @@ passport.serializeUser(function(user, done) {
     done(err, user);
   });
 });
+
+  passport.use(new LocalStrategy(
+  function(adminusername, adminpassword, done) {
+    Admin.getAdminByUsername(adminusername,function(err,admin){
+        if(err) throw err;
+        if(!admin){
+            return done(null,false,{message: 'Unknown Admin'});
+        }
+       Admin.comparePassword(adminpassword,admin.adminpassword,function(err, isMatch){
+            if(err) throw err;
+            if(isMatch){
+                return done(null,admin);
+            }else{
+                return done(null,false,{message:'Invalid password'});
+            }
+        });
+    });
+  
+  }));
+passport.serializeUser(function(admin, done) {
+  done(null, admin.id);
+});
+ passport.deserializeUser(function(id, done) {
+  Admin.getAdminById(id, function(err, Admin) {
+    done(err, Admin);
+  });
+});
+
+
  router.post('/login',
   passport.authenticate('local',{successRedirect:'/',failureRedirect: '/users/login', failureFlash: true}),
   function(req, res) {
@@ -298,11 +328,11 @@ passport.serializeUser(function(user, done) {
   router.post('/Admin',
   passport.authenticate('local',{successRedirect:'/users/ReviewClaims',failureRedirect: '/users/Admin', failureFlash: true}),
   function(req, res) {
-    res.redirect('/users/ReviewClaims');
+    res.redirect('/users/reviewClaims');
  
   });
   router.post('/ReviewClaims',function(req,res){
 
   });
 
-module.exports = router;
+module.exports = router;var e
