@@ -29,6 +29,9 @@ router.get('/ReviewClaims', function(req,res){
 router.get('/AdminRegister', function(req,res){
     res.render('AdminRegister');
 });
+router.get('/ClaimCheck', function(req,res){
+    res.render('ClaimCheck');
+});
 
 
  router.post('/register',function(req,res){
@@ -70,17 +73,17 @@ router.get('/AdminRegister', function(req,res){
  router.post('/AdminRegister',function(req,res){
      var adminname = req.body.adminname;
      var adminemail =req.body.adminemail;
-     var adminusername =req.body.adminusername;
-     var adminpassword =req.body.adminpassword;
-     var adminpassword2 =req.body.adminpassword2;
+     var username =req.body.username;
+     var password =req.body.password;
+     var password2 =req.body.password2;
       //Validation
      req.checkBody('adminname','Name is required').notEmpty();
      req.checkBody('adminemail','Email is required').notEmpty();
      req.checkBody('adminemail','Email is not valid').isEmail();
-     req.checkBody('adminusername','username is required').notEmpty();
-     req.checkBody('adminpassword','Password is required').notEmpty();
-     req.checkBody('adminpassword','Password is required that is atleast 8 characters, 1 number, 1 uppercase letter and 1 lowercase letter').notEmpty().isLength({ min: 4}).matches('[0-9]').matches('[a-z]').matches('[A-Z]');
-     req.checkBody('adminpassword2','Passwords do not match').equals(req.body.adminpassword);
+     req.checkBody('username','username is required').notEmpty();
+     req.checkBody('password','Password is required').notEmpty();
+     req.checkBody('password','Password is required that is atleast 8 characters, 1 number, 1 uppercase letter and 1 lowercase letter').notEmpty().isLength({ min: 4}).matches('[0-9]').matches('[a-z]').matches('[A-Z]');
+     req.checkBody('password2','Passwords do not match').equals(req.body.password);
       var errors = req.validationErrors();
      if(errors){
         res.render('AdminRegister',{
@@ -91,8 +94,8 @@ router.get('/AdminRegister', function(req,res){
         var newAdmin = new Admin({
             adminname: adminname,
             adminemail: adminemail,
-            adminusername: adminusername,
-            adminpassword: adminpassword
+            username: username,
+            password: password
         });
         Admin.createAdmin(newAdmin, function(err,admin){
             if(err)throw err;
@@ -276,13 +279,13 @@ passport.serializeUser(function(user, done) {
 });
 
   passport.use(new LocalStrategy(
-  function(adminusername, adminpassword, done) {
-    Admin.getAdminByUsername(adminusername,function(err,admin){
+  function(username, password, done) {
+    Admin.getAdminByUsername(username,function(err,admin){
         if(err) throw err;
         if(!admin){
             return done(null,false,{message: 'Unknown Admin'});
         }
-       Admin.comparePassword(adminpassword,admin.adminpassword,function(err, isMatch){
+       Admin.comparePassword(password,admin.password,function(err, isMatch){
             if(err) throw err;
             if(isMatch){
                 return done(null,admin);
@@ -326,13 +329,16 @@ passport.serializeUser(function(admin, done) {
  });
 
   router.post('/Admin',
-  passport.authenticate('local',{successRedirect:'/users/ReviewClaims',failureRedirect: '/users/Admin', failureFlash: true}),
+  passport.authenticate('local',{successRedirect:'/users/Admin',failureRedirect: '/users/login', failureFlash: true}),
   function(req, res) {
-    res.redirect('/users/reviewClaims');
+    res.redirect('/Admin');
  
   });
   router.post('/ReviewClaims',function(req,res){
 
   });
+  router.post('/ClaimCheck',function(req,res){
 
-module.exports = router;var e
+  });
+
+module.exports = router;
