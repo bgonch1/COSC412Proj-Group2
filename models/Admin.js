@@ -3,11 +3,11 @@ var bcrypt = require('bcryptjs');
 
 
 var AdminSchema = mongoose.Schema({
-	adminusername:{
+	username:{
 		type: String,
 		index:true
 	},
-	adminpassword: {
+	password: {
 		type:String
 	},
 	adminemail: {
@@ -24,16 +24,16 @@ var Admin = module.exports = mongoose.model('Admin',AdminSchema);
 
 module.exports.createAdmin = function(newAdmin,callback){
 	bcrypt.genSalt(10,function(err,salt){
-		bcrypt.hash(newAdmin.adminpassword,salt,function(err,hash){
-			newAdmin.adminpassword = hash;
+		bcrypt.hash(newAdmin.password,salt,function(err,hash){
+			newAdmin.password = hash;
 			newAdmin.save(callback);
   
 		});
 	});
 }
 
-module.exports.getAdminByUsername = function(adminusername,callback){
-	var query = {adminusername: adminusername};
+module.exports.getAdminByUsername = function(username,callback){
+	var query = {username: username};
 	Admin.findOne(query, callback);
 }
 module.exports.getAdminById = function(id,callback){
