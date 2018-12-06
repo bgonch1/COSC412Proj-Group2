@@ -15,8 +15,10 @@ var UserSchema = mongoose.Schema({
 	},
 	name: {
 		type:String
+	}, 
+	authority: {
+		type:String
 	}
-
 
 });
 
