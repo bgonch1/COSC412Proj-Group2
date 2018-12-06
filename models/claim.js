@@ -75,7 +75,11 @@ var ClaimSchema = mongoose.Schema({
 	},
 	updated:{
 		type: Date, default: Date.now
+	},
+	claim_status:{
+		type:String
 	}
+
 
 
 
