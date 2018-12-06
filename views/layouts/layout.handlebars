@@ -9,21 +9,26 @@
 	<div class="container">
       <div class="header clearfix">
         <nav>
-          <ul class="nav nav-pills pull-right">
-            {{#if Admin}}
-              <li role="presentation"><a href="/users/logout">Logout&nbsp&nbsp </a></li>
+          <ul class="nav nav-pills pull-right"> 
+            {{#if user}}
+             {{#if user.authority}}
               <li role="presentation"><a href="/.">Dashboard&nbsp&nbsp&nbsp&nbsp </a></li>
+              <li role="presentation"><a href="/users/reviewClaims">Review Claims&nbsp&nbsp </a></li>
+              <li role="presentation"><a href="/users/claimCheck">Check Claim Status&nbsp&nbsp </a></li>
+              <li role="presentation"><a href="/users/logout">Logout&nbsp&nbsp </a></li>              
+             {{else}}
+              <li role="presentation"><a href="/users/logout">Logout&nbsp&nbsp </a></li>
+              <li role="presentation"><a href="/">Dashboard&nbsp&nbsp&nbsp&nbsp </a></li>
               <li role="presentation"><a href="/users/claims">Start New Claims&nbsp&nbsp&nbsp&nbsp </a></li>
-              <li role="presentation"><a href="/users/Activity">Recent Activity&nbsp&nbsp </a></li>
-
-
-
+              <li role="presentation"><a href="/users/Activity">View Claims&nbsp&nbsp </a></li> 
+             {{/if}}
             {{else}}
               <li role="presentation"><a href="/users/login">Login&nbsp&nbsp&nbsp&nbsp </a></li>
               <li role="presentation"><a href="/users/Admin">Admin Login&nbsp&nbsp&nbsp&nbsp </a></li>
               <li role="presentation"><a href="/users/register">Register&nbsp&nbsp&nbsp&nbsp </a></li> 
-              <li role="presentation"><a href="/users/AdminRegister">Admin Register&nbsp&nbsp&nbsp&nbsp </a></li>           
-            {{/if}}
+              <li role="presentation"><a href="/users/AdminRegister">Admin 
+              Register&nbsp&nbsp&nbsp&nbsp </a></li>
+            {{/if}}             
           </ul>
         </nav>
         <h3 class="text-muted">Login App</h3>
@@ -50,7 +55,7 @@
       </div>
 
       <footer class="footer">
-        <p>&copy; Team Tigers</p>
+        <p>&copy; Team Tigers </p>
       </footer>
 
     </div> <!-- /container -->
